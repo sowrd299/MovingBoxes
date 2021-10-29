@@ -34,12 +34,13 @@ public class SnappingDragable : Dragable
 		// TODO: This might not want to be the only spot we raycast from...
 			
 		if(hitCollider != null){
+			// do this first in case any handlers want to override it
+			SnapPos = hitCollider.transform.position; 
 			//Debug.Log("Snapping to " + hit.collider.gameObject.name);
 			ISnapHandler[] handlers = hitCollider.GetComponents<ISnapHandler>();
 			foreach(ISnapHandler handler in handlers){
 				handler.HandleSnappedTo(this);
 			}
-			SnapPos = hitCollider.transform.position;
 		}
 		if(SnapPos != null){
 			transform.position = (Vector3)SnapPos;
